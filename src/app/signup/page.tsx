@@ -6,21 +6,29 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 
 export default function SignupPage() {
+
+  // Initialize the router
   const router = useRouter();
+
+  // Initialize state for user credentials, button disabled state, and loading state
   const [user, setUser] = React.useState({
     username: "",
     email: "",
     password: "",
   });
-
   const [buttonDisabled, setButtonDisabled] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
 
+  // Function to handle signup
   const onSignup = async () => {
-    // create a try-catch block to handle the signup process
     try {
+        // Set loading state to true before making the API call
         setLoading(true);
+
+        // Make a POST request to the signup API endpoint with user credentials
         const response = await axios.post("/api/users/signup", user); 
+
+        // Redirect to the login page after successful signup
         router.push("/login");
         toast.success("Signup successful! Please login.");
     } catch (error: any) {

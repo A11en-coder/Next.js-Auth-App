@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Define the user schema
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true },
   email: { type: String, required: true, unique: true },
@@ -12,5 +13,6 @@ const userSchema = new mongoose.Schema({
   verificationTokenExpiry: { type: Date },
 });
 
+// Create the User model
 const User = mongoose.models.users || mongoose.model("User", userSchema); 
 export default User;

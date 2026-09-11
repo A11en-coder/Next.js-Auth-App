@@ -5,7 +5,10 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 
 export default function LoginPage() {
+  // Initialize the router
   const router = useRouter();
+
+  // Initialize state for user credentials, button disabled state, and loading state
   const [user, setUser] = React.useState({
     email: "",
     password: "",
@@ -21,11 +24,17 @@ export default function LoginPage() {
     }
   }, [user]);
 
+  // Function to handle login
   const onLogin = async () => {
     try {
+      // Set loading state to true before making the API call
       setLoading(true);
+
+      // Make a POST request to the login API endpoint with user credentials
       const response = await axios.post("/api/users/login", user);
       console.log("Login successful:", response.data);
+      
+      // Redirect to the profile page after successful login
       router.push("/profile");
     } catch (error: any) {
       console.error("Error during login:", error);
@@ -44,6 +53,7 @@ export default function LoginPage() {
       <input
         type="text"
         id="email"
+        // set the value of the input to the email state and update the state on change
         value={user.email}
         onChange={(e) => setUser({ ...user, email: e.target.value })}
         className="border border-gray-300 rounded px-2 py-1 mb-4"
@@ -56,6 +66,7 @@ export default function LoginPage() {
       <input
         type="text"
         id="password"
+        // set the value of the input to the password state and update the state on change
         value={user.password}
         onChange={(e) => setUser({ ...user, password: e.target.value })}
         className="border border-gray-300 rounded px-2 py-1 mb-4"
@@ -63,6 +74,7 @@ export default function LoginPage() {
       />
       <button
         className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        // when the button is clicked, call the onLogin function
         onClick={onLogin}
       >
         Login
