@@ -6,7 +6,6 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 
 export default function SignupPage() {
-
   // Initialize the router
   const router = useRouter();
 
@@ -22,15 +21,15 @@ export default function SignupPage() {
   // Function to handle signup
   const onSignup = async () => {
     try {
-        // Set loading state to true before making the API call
-        setLoading(true);
+      // Set loading state to true before making the API call
+      setLoading(true);
 
-        // Make a POST request to the signup API endpoint with user credentials
-        const response = await axios.post("/api/users/signup", user); 
+      // Make a POST request to the signup API endpoint with user credentials
+      const response = await axios.post("/api/users/signup", user);
 
-        // Redirect to the login page after successful signup
-        router.push("/login");
-        toast.success("Signup successful! Please login.");
+      // Redirect to the login page after successful signup
+      router.push("/login");
+      toast.success("Signup successful! Please login.");
     } catch (error: any) {
       console.log("Error during signup:", error);
       toast.error("Something went wrong during signup");
@@ -95,6 +94,12 @@ export default function SignupPage() {
       </button>
       <Link href="/login" className="mt-4 text-blue-500 hover:underline">
         Already have an account? Login
+      </Link>
+      <Link
+        href="/forgot-password"
+        className="mt-2 text-blue-500 hover:underline"
+      >
+        Forgot your password? Click here to reset it.
       </Link>
     </div>
   );

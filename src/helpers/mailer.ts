@@ -12,7 +12,6 @@ export const sendEmail = async ({
   userId: string;
 }) => {
   try {
-
     // update the user in the database with the hashed token and its expiration time based on the email type
     const hashedToken = await bcrypt.hash(userId, 10);
     if (emailType === "VERIFY") {
@@ -52,8 +51,8 @@ export const sendEmail = async ({
     // send the email using the transporter and mail options
     const mailresponse = await transport.sendMail(mailOptions);
     return mailresponse;
-
   } catch (error) {
     console.error("Error sending email:", error);
+    throw error;
   }
 };
