@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
     const { email, password } = reqBody;
     console.log("Received data:", { email, password });
 
-    // Check if the user exists
+    // obtain the user from the database based on the provided email
     const existingUser = await User.findOne({ email });
     if (!existingUser) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
@@ -28,6 +28,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         { message: "Invalid password" },
         { status: 401 },
+      );
+    }
+
+    if (!existingUser.isVerified) {
+      return NextResponse.json(
+        { message: "Please verify your email before logging in" },
+        { status: 403 },
       );
     }
 

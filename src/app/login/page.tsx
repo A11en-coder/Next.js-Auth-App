@@ -15,6 +15,7 @@ export default function LoginPage() {
   });
   const [buttonDisabled, setButtonDisabled] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [loginError, setLoginError] = React.useState("");
 
   useEffect(() => {
     if (user.email && user.password) {
@@ -29,15 +30,20 @@ export default function LoginPage() {
     try {
       // Set loading state to true before making the API call
       setLoading(true);
+      setLoginError("");
 
       // Make a POST request to the login API endpoint with user credentials
       const response = await axios.post("/api/users/login", user);
       console.log("Login successful:", response.data);
-      
+
       // Redirect to the profile page after successful login
       router.push("/profile");
     } catch (error: any) {
       console.error("Error during login:", error);
+      setLoginError(
+        error.response?.data?.message ||
+          "We could not log you in. Please check your details and try again.",
+      );
     } finally {
       setLoading(false);
     }
@@ -79,6 +85,11 @@ export default function LoginPage() {
       >
         Login
       </button>
+      {loginError && (
+        <p className="mt-4 max-w-sm text-center text-red-600" role="alert">
+          {loginError}
+        </p>
+      )}
       <Link href="/signup" className="mt-4 text-blue-500 hover:underline">
         Sign up here
       </Link>
